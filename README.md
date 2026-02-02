@@ -7,8 +7,8 @@ Proyecto fullstack en desarrollo.
 - /frontend → Frontend (pendiente)
 
 ## Estado
-[x] Base backend
-[-] Usuarios + Auth
+- [x] Base backend
+- [ ] Usuarios + Auth
 
 ## Autor
 Kenny Muñiz

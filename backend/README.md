@@ -17,16 +17,17 @@ Este proyecto es un API backend desarrollado con NODE.js, express y ProstgreSQL 
 3. Conectar una api a un servicio de base de datos, en este caso PostgreSQL
 
 ## Estado actual
-- Servidor Express operativo (Endpoint `/health`)  
-- Variables de entorno configuradas  
-- Conexión a PostgreSQL (pendiente de uso en endpoints)  
+- Servidor Express operativo (Endpoint `/health`) 
+- Variables de entorno configuradas
+- Conexión a PostgreSQL (pendiente de uso en endpoints)
+- Modelo de usuario definido
+ 
 
 ### Proximo pasos
-1. Definir e implementar el modelo de usuario.
-2. Implementar registro y login de usuarios.
-3. Aplicar hash de contraseñas (bcrypt).
-4. Implementar autenticación basada en JWT.
-5. Crear middleware de autenticación para proteger rutas.
+1. Implementar registro y login de usuarios.
+2. Aplicar hash de contraseñas (bcrypt).
+3. Implementar autenticación basada en JWT.
+4. Crear middleware de autenticación para proteger rutas.
 
 ## Roadmap
 - [x] Base backend
