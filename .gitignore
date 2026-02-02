@@ -1,0 +1,7 @@
+# Archivos del sistema u editores
+.vscode/
+
+#Logs
+*.log
+
+usuarios_definicion.md

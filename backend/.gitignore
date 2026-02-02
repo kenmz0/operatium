@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (seguridad)
+.env
+
+# Archivos de registro (logs)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Carpetas de compilación (si usas build o dist)
+
+# Archivos del sistema u editores
+.vscode/
+
+# Logs
+*.log
