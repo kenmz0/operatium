@@ -1,10 +1,13 @@
+import { UserRepository } from '../repositories/user.repository.js';
 import {Router} from 'express';
-import { pool } from '../config/bd.js';
 
 export const router = Router();
 
 router.get('/', async (req, res) =>{
-     const result = await pool.query('SELECT NOW()');
+    const userData = {
+
+    }
+     //const result = UserRepository.create(userData) 
     res.json({
         status: 'OK',
         message: 'Servidor funciona correctamente',

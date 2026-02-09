@@ -1,11 +1,11 @@
-const express = require('express');
-const healthRoutes = require('./routes/health.routes');
+import express from 'express';
+import {router as healthRoutes } from './routes/health.routes.js'
+import {router as users} from './routes/users.routes.js'
 
-const app = express();
+export const app = express();
 
 //middleware
 app.use(express.json());
 //rutas
 app.use('/health', healthRoutes);
-
-module.exports = app;
+app.use('/users', users)

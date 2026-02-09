@@ -44,3 +44,6 @@ Este proyecto es un API backend desarrollado con NODE.js, express y ProstgreSQL 
 3. Crear archivo .env
 4. Eejcutar
     npm run dev
+
+
+# Diseño de base de datos
