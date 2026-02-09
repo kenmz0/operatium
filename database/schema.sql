@@ -178,13 +178,13 @@ drop table team
 drop table team_template 
 drop table organization
  
- select * from users u 
+ select * from users u where u.ID_USER = 'f032059e-3c83-4433-970b-398b4bb80850'
  insert into users (first_name , last_name ,email , password_hash , phone_number , updated_at, last_session_at) 
  values('Raul', 'Gimenez', 'raul.gimenez@gmail.com', 'hash_sdasdasd', '87678687678', null,null) 
 
  
   select * from organization o 
- insert into organization (name , description , email , id_owner , telephone , status) 
+ insert into organization (NAME , DESCRIPTION, EMAIL , ID_OWNER , TELEPHONE , STATUS) 
  values('Ferreteria Palo Alto', 'vedemos hierro', 'raul.gimenez@gmail.com', 'uuid', '87678687678', 'active') 
  
  select * from "role" r 
