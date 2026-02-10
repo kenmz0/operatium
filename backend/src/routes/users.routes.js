@@ -1,16 +1,11 @@
 import { UserRepository } from '../repositories/user.repository.js';
-import {Router} from 'express';
+import { Router } from 'express';
+import { validateUserRegistration } from '../../middlewares/user.validation.js'
 
 export const router = Router();
 
-router.get('/', async (req, res) =>{
-    const userData = {
+router.get('/', UserRepository.getAll);
 
-    }
-     //const result = UserRepository.create(userData) 
-    res.json({
-        status: 'OK',
-        message: 'Servidor funciona correctamente',
-        dbTime: result.rows[0]
-    });
-});
+router.get('/:id', UserRepository.getById);
+
+router.post('/', validateUserRegistration, UserRepository.create);
