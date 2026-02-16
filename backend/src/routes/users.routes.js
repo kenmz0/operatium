@@ -4,8 +4,12 @@ import { validateUserRegistration } from '../../middlewares/user.validation.js'
 
 export const router = Router();
 
-router.get('/', UserRepository.getAll);
+router.get('/me', UserRepository.getOwnProfile);
+router.get('/me/roles', UserRepository.getOwnRoles);
 
 router.get('/:id', UserRepository.getById);
+router.get('/:id/roles', UserRepository.getUserRoles);
 
 router.post('/', validateUserRegistration, UserRepository.create);
+
+
