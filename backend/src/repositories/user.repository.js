@@ -1,60 +1,45 @@
 import { pool } from '../config/bd.js'
-import bcrypt from 'bcrypt'
 
 export const UserRepository = {
-    getAll: async (req, res) => {
-        try {
-            const result = await pool.query('select * from USERS');
-            const count = result.rows.length;
-            res.status(200).json({
-                status: 'OK',
-                message: `Query OK, ${count} rows returned`,
-                count,
-                data: result.rows,
-            });
-        } catch (error) {
-            res.status(500).json({
-                status: "Fail",
-                error: error.message
-            });
-        }
+    findFullProfileById: async ({ idUser }) => {
+        const user_query = await pool.query(
+            `select u.ID_USER, u.FIRST_NAME, u.LAST_NAME, u.EMAIL, u.PHONE_NUMBER, u.created_at, u.LAST_SESSION_AT from USERS u
+             where u.ID_USER = $1`,
+            [idUser]);
+        return user_query.rows[0];
     },
-    getById: async (req, res) => {
-        try {
-            const { id } = req.params
-            const result = await pool.query('select * from USERS where ID_USER = $1', [id]);
-            res.status(200).json({
-                status: 'OK',
-                message: 'Query OK, user returned',
-                data: result.rows[0],
-            });
-        } catch (error) {
-            res.status(500).json({
-                status: "Fail",
-                error: error.message
-            });
-        }
+    findPublicProfileById: async ({ idUser }) => {
+        const user_query = await pool.query(`select u.ID_USER, concat(u.FIRST_NAME,' ',u.LAST_NAME) as fullname, u.EMAIL from USERS u  
+            where u.ID_USER = $1`, [idUser]);
+        return user_query.rows[0];
     },
-    create: async (req, res) => {
-        try {
-            const {first_name, last_name, email, password, phone_numer } = req.body
-            const salt = await bcrypt.genSalt(10);
-            const password_hash = await bcrypt.hash(password, salt);
-            const values = [first_name, last_name, email, password_hash, phone_numer];
-            const query = 'insert into USERS (first_name , last_name , email , password_hash , phone_number) values($1, $2, $3 ,$4, $5) returning id_user';
-            const result = await pool.query(query, values);
-            res.status(201).json({
-                status: 'OK',
-                message: "user created susccesfully",
-                id: result.rows[0]
-            });
-        } catch (error) {
-            res.status(500).json({
-                status: "Fail",
-                error: error.message
-            });
-        }
-
+    findPublicProfileByEmail: async ({ email }) => {
+        const query = await pool.query(`select u.ID_USER, concat(u.FIRST_NAME,' ',u.LAST_NAME) as fullname, u.EMAIL from USERS u  
+            where u.EMAIL = $1`, [email]);
+        return query.rows[0]
+    },
+    findExistingEmail: async ({ email }) => {
+        const query = await pool.query(`select exists (
+                select 1 from users where email = $1) as "existing"`, [email]);
+        return query.rows[0]
+    },
+    findInvitationsPending: async ({ idUser }) => {
+        const query = await pool.query(`select * from INVITATIONS where status = 'pending' and id_user = $1`, [idUser])
+        return query.rows
+    },
+    findAllInvitations: async ({ idUser }) => {
+        const query = await pool.query(`select * from INVITATIONS where id_user = $1`, [idUser])
+        return query.rows
+    },
+    updateInvitation: async ({ idUser, idInvitation, status }) => {
+        const query = await pool.query(`update INVITATIONS set STATUS = $1, RESOLVE_AT = NOW() where ID_INVITATION = $2 and ID_USER = $3 and STATUS is distinct from $1 returning ID_INVITATION, STATUS `, [status, idInvitation, idUser])
+        return query.rows[0]
+    },
+    create: async ({ first_name, last_name, email, password_hash, phone_number }) => {
+        const values = [first_name, last_name, email, password_hash, phone_number];
+        const query = 'insert into USERS (first_name , last_name , email , password_hash , phone_number) values($1, $2, $3 ,$4, $5) returning id_user';
+        const user = await pool.query(query, values);
+        return user.rows[0]
     }
 }
 
