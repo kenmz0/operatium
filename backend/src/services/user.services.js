@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { UserRepository } from '../repositories/user.repository.js';
 import bcrypt from 'bcrypt'
 
@@ -35,7 +36,7 @@ export const UserService = {
         if( existingUser){
             throw new Error("Email already exists")
         }
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(process.env.BCRYPT_SALT);
         const password_hash = await bcrypt.hash(password, salt);
         const userId = await UserRepository.create({first_name, last_name, email,password_hash, phone_number})
         if(!userId) throw new Error('User not created');

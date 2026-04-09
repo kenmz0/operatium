@@ -54,6 +54,9 @@ router.get('/:idUser', async (req, res) => {
     }
 });
 
+
+
+
 router.patch(
     '/:idUser/me/invitations/:idInvitation',
     async (req, res) => {
